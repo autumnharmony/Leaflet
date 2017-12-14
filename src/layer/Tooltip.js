@@ -7,6 +7,7 @@ import {Layer} from './Layer';
 import {FeatureGroup} from './FeatureGroup';
 import * as Util from '../core/Util';
 import * as DomUtil from '../dom/DomUtil';
+import {TooltipDrag} from './Tooltip.Drag';
 
 /*
  * @class Tooltip
@@ -125,6 +126,25 @@ export var Tooltip = DivOverlay.extend({
 		    className = prefix + ' ' + (this.options.className || '') + ' leaflet-zoom-' + (this._zoomAnimated ? 'animated' : 'hide');
 
 		this._contentNode = this._container = DomUtil.create('div', className);
+
+
+		if (this.options.draggable){
+			this._contentNode.setAttribute('draggable', true);
+			var div = this._contentNode;
+			 if (TooltipDrag) {
+			 	var draggable = this.options.draggable;
+			 	if (this.dragging) {
+			 		draggable = this.dragging.enabled();
+			 		this.dragging.disable();
+			 	}
+
+			 	this.dragging = new TooltipDrag(this);
+
+			 	if (draggable) {
+			 		this.dragging.enable();
+			 	}
+			 }
+		}
 	},
 
 	_updateLayout: function () {},
