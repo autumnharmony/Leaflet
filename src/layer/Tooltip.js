@@ -128,22 +128,21 @@ export var Tooltip = DivOverlay.extend({
 		this._contentNode = this._container = DomUtil.create('div', className);
 
 
-		if (this.options.draggable){
+		if (this.options.draggable) {
 			this._contentNode.setAttribute('draggable', true);
-			var div = this._contentNode;
-			 if (TooltipDrag) {
-			 	var draggable = this.options.draggable;
-			 	if (this.dragging) {
-			 		draggable = this.dragging.enabled();
-			 		this.dragging.disable();
-			 	}
+			if (TooltipDrag) {
+				var draggable = this.options.draggable;
+				if (this.dragging) {
+					draggable = this.dragging.enabled();
+					this.dragging.disable();
+				}
 
-			 	this.dragging = new TooltipDrag(this);
+				this.dragging = new TooltipDrag(this);
 
-			 	if (draggable) {
-			 		this.dragging.enable();
-			 	}
-			 }
+				if (draggable) {
+					this.dragging.enable();
+				}
+			}
 		}
 	},
 
